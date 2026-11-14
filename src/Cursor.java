@@ -52,6 +52,10 @@ public class Cursor<T> {
             ajustarMemoria();
             posicionDisponible = buscarMemoriaDisponible();
         }
+        //ESTE IF SE EJECUTA AL CREAR EL ARBOL
+        if(raiz == -1){
+            raiz = posicionDisponible;
+        }
 
         memoria[posicionDisponible] = nodo;
 
@@ -61,9 +65,10 @@ public class Cursor<T> {
     }
 
     public int buscarIndice(T etiqueta, int indiceActual){
-        if (etiqueta == null || indiceActual == -1) {return -1;}
 
-        if (memoria[indiceActual].getEtiqueta().equals(etiqueta)) {
+        if (etiqueta == null || indiceActual < 0 || indiceActual >= memoria.length) {return -1;}
+
+        if (etiqueta.equals(memoria[indiceActual].getEtiqueta())) {
             return indiceActual;
         }
 

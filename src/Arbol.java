@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Arbol<T> {
     private int raiz;
@@ -64,5 +65,56 @@ public class Arbol<T> {
         orden_previo(nodo, orden);
         return orden;
     }
+    //METODO PARA ORDEN SIMETRICO
+     private void orden_Simetrico(int nodo, ArrayList<T> Lista) throws RangoInvalidoException{
+        if(nodo == -1) {return;}
 
+        var papupronodo = memoria.getNodo(nodo);
+        if (papupronodo == null || papupronodo.getEtiqueta() == null) {return;}
+        int hijoActual = papupronodo.getHijoIzq();
+
+        if(hijoActual == -1){
+            Lista.add(papupronodo.getEtiqueta());
+            return;
+        }
+        //visita simetricamente el primer hijo
+        orden_Simetrico(hijoActual,Lista);
+        //Visitar raiz actual
+         Lista.add(papupronodo.getEtiqueta());
+
+         hijoActual = memoria.getNodo(hijoActual).getHermanoDer();
+         while(hijoActual != -1){
+             orden_Simetrico(hijoActual,Lista);
+             hijoActual = memoria.getNodo(hijoActual).getHermanoDer();
+         }
+     }
+
+     public ArrayList<T> ORD_SIM(int nodo) throws RangoInvalidoException{
+         ArrayList<T> orden = new ArrayList<T>();
+         orden_Simetrico(nodo, orden);
+         return orden;
+     }
+
+
+        //ORDEN POSTERIOR
+    private void orden_posterior(int nodo, ArrayList<T> lista) throws RangoInvalidoException{
+    if(nodo == -1){return;}
+
+    var papuhackernodo = memoria.getNodo(nodo);
+        if (papuhackernodo == null || papuhackernodo.getEtiqueta() == null) { return; }
+
+        //Visitar todos los hijos de izquierda a derecha
+        int hijoActual = papuhackernodo.getHijoIzq();
+        while (hijoActual != -1){
+            orden_posterior(hijoActual, lista);
+            hijoActual = memoria.getNodo(hijoActual).getHermanoDer();
+        }
+        //por ultimo la raiz
+        lista.add(papuhackernodo.getEtiqueta());
+    }
+    public ArrayList<T> ORD_POST(int nodo) throws RangoInvalidoException{
+        ArrayList<T> orden = new ArrayList<T>();
+        orden_posterior(nodo,orden);
+        return orden;
+    }
 }
