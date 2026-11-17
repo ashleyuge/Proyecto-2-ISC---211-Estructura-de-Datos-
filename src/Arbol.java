@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Arbol<T> {
     private int raiz;
@@ -116,5 +118,73 @@ public class Arbol<T> {
         ArrayList<T> orden = new ArrayList<T>();
         orden_posterior(nodo,orden);
         return orden;
+    }
+}
+
+//OPERACION PADRE
+public int PADRE(int nodo){
+    memoria.getNodo(nodo);
+    if (nodo==raiz||nodo==-1) {return -1;}
+    return buscarPadre(raiz,nodo);
+
+}
+
+private int buscarPadre(int actual, int n) throws RangoInvalidoException {
+    if (actual == -1) { return -1; }
+
+    Nodo<T> nodoActual = memoria.getNodo(actual);
+    if (nodoActual == null || nodoActual.getEtiqueta() == null) { return -1; }
+
+    int hijo = nodoActual.getHijoIzq();
+    while (hijo != -1) {
+        if (hijo == n) {                
+            return actual;
+        }
+        int resultado = buscarPadre(hijo, n);   
+        if (resultado != -1) {
+            return resultado;
+        }
+        hijo = memoria.getNodo(hijo).getHermanoDer();
+    }
+    return -1;
+}
+
+//Operacion HIJO_MAS_IZQ
+public int HIJO_MAS_IZQ(int nodo) throws RangoInvalidoException{
+    Nodo<T> nodoActual = memoria.getNodo(nodo);
+    if (nodoActual == null || nodoActual.getEtiqueta() == null) { return -1; }
+    return nodoActual.getHijoIzq();
+}
+
+//MOSTRAR NIVELES
+public void MOSTRAR_NIVELES() throws RangoInvalidoException {
+    if (raiz == -1) {
+        System.out.println("El arbol esta vacio");
+        return;
+    }
+
+    Queue<Integer> cola = new LinkedList<>();
+    cola.add(raiz);
+    int nivel = 0;
+
+    while (!cola.isEmpty()) {
+        int cantidad = cola.size();          // cuántos nodos tiene este nivel
+        StringBuilder linea = new StringBuilder("Nivel " + nivel + ": ");
+
+        for (int i = 0; i < cantidad; i++) {
+            int actual = cola.remove();
+            Nodo<T> nodo = memoria.getNodo(actual);
+            linea.append(nodo.getEtiqueta()).append("  ");
+
+            // encola todos los hijos: hijoIzq y luego sus hermanos derechos
+            int hijo = nodo.getHijoIzq();
+            while (hijo != -1) {
+                cola.add(hijo);
+                hijo = memoria.getNodo(hijo).getHermanoDer();
+            }
+        }
+
+        System.out.println(linea);
+        nivel++;
     }
 }
