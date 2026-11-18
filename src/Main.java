@@ -33,7 +33,6 @@ public class Main {
             var hermanoDer = arbolito.HERMANO_DER(hijoIzq);
             System.out.println("Hermano derecho del hijo mas izquierdo: " + arbolito.ETIQUETA(hermanoDer));
 
-            
         
         } catch (RangoInvalidoException e) {
             System.out.println(e.getMessage());
