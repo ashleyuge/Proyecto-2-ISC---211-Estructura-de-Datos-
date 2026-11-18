@@ -12,8 +12,15 @@ public class Arbol<T> {
         raiz = -1;
     }
 
-    public int RAIZ(){return raiz;}
 
+    
+
+    //---------------------------------------------------------------------------------------------
+
+    // ----------------- OPERACIONES DEL TDA ARBOL -----------------
+
+    // --- OPERACION CREA ---
+    
     //CASO BASE
     public int CREA(T etiqueta){
         Nodo<T> nuevoNodo = new Nodo<T>(etiqueta);
@@ -51,9 +58,9 @@ public class Arbol<T> {
         return indiceNodo;
     }
 
-    //---------------------------------------------------------------------------------------------
-
-    // ----------------- OPERACIONES DEL TDA ARBOL -----------------
+    // --- OPERACION RAIZ ---
+    
+    public int RAIZ(){return raiz;}
 
     // --- OPERACION PADRE ---
 
